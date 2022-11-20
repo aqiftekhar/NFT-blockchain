@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { FunctionComponent } from "react";
-import { NFTModel } from "../../../Model/NFT";
+import { NFTModel } from "../../../../Model/NFT";
 
 type NFTItem ={
    item : NFTModel

@@ -1,5 +1,5 @@
 import { FunctionComponent } from "react";
-import { NFTModel } from "../../../Model/NFT";
+import { NFTModel } from "../../../../Model/NFT";
 import NFTitem from "../Item";
 
 interface NFTListProps {
