@@ -5,6 +5,7 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 // import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
+import ActiveLink from "../Link";
 
 const navigation = [
   { name: "Marketplace", href: "/", current: true },
@@ -42,21 +43,20 @@ export default function Navbar() {
                   />
                 </div>
                 <div className="hidden sm:block sm:ml-6">
-                  <div className="flex space-x-4">
+                  <div className="flex space-x-4 mt-2">
                     {navigation.map((item) => (
-                      <Link
+                      <ActiveLink
                         key={item.name}
                         href={item.href}
-                        className={classNames(
-                          item.current
-                            ? "bg-gray-900 text-white"
-                            : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                          "px-3 py-2 rounded-md text-sm font-medium"
-                        )}
-                        aria-current={item.current ? "page" : undefined}
+                        activeclass="bg-gray-900 text-white"
                       >
-                        {item.name}
-                      </Link>
+                        <span
+                          className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                          aria-current={item.current ? "page" : undefined}
+                        >
+                          {item.name}
+                        </span>
+                      </ActiveLink>
                     ))}
                   </div>
                 </div>
