@@ -3,7 +3,7 @@ import Navbar from "../navbar";
 interface BaseLayoutProps {
   children?: ReactNode;
 }
-export const BaseLayout: FunctionComponent<BaseLayoutProps> = ({
+const BaseLayout : FunctionComponent<BaseLayoutProps> = ({
   children,
 }) => {
   return (
@@ -17,3 +17,4 @@ export const BaseLayout: FunctionComponent<BaseLayoutProps> = ({
     </>
   );
 };
+export default BaseLayout;
