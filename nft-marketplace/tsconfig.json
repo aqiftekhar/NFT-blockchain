@@ -18,6 +18,8 @@
     "paths": {
       "@ui":["components/UI"],
       "@ui/*":["components/UI/*"],
+      "@providers":["components/Providers"],
+      "@providers/*": ["components/Providers/*"],
       "@models/*":["Model/*"]
     }
   },
