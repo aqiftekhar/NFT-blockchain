@@ -39,7 +39,6 @@ const handleAccountsChanged = (...args: unknown[]) => {
     if (accounts.length === 0) {
         console.error('Please connect to Metamask!');
     } else if (accounts[0] != data) {
-        alert('Changed')
         mutate(accounts[0]);
     }
 }
