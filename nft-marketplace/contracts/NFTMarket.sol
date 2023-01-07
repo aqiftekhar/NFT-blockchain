@@ -12,6 +12,8 @@ contract NFTMarket is ERC721URIStorage {
     mapping(string => bool) private _usedtokenURI;
     mapping(uint => NFTItem) private _idToNFTItem;
 
+    uint public _listingPrice = 0.025 ether;
+
     struct NFTItem {
         uint tokenId;
         uint price;
@@ -31,6 +33,7 @@ contract NFTMarket is ERC721URIStorage {
     function mintToken(string memory tokenURI, uint price) public payable returns(uint) {
 
         require(!tokenURIExists(tokenURI), "Token URI already exists");
+        require(msg.value == _listingPrice, "price must be equal to listing price");
 
         _tokenIds.increment();
         _listedItems.increment();

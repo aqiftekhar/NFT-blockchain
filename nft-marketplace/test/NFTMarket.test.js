@@ -4,6 +4,7 @@ const { ethers } = require("ethers");
 contract("NFTMarket", (accounts) => {
   let _contract = null;
   let _nftPrice = ethers.utils.parseEther("0.1").toString();
+  let _listingPrice = ethers.utils.parseEther("0.025").toString();
 
   before(async () => {
     _contract = await NFTMarket.deployed();
@@ -14,6 +15,7 @@ contract("NFTMarket", (accounts) => {
     before(async () => {
       await _contract.mintToken(_tokenURI, _nftPrice, {
         from: accounts[0],
+        value: _listingPrice
       });
     });
     it("Owner of the token should be account zero", async () => {
@@ -33,6 +35,7 @@ contract("NFTMarket", (accounts) => {
       try {
         await _contract.mintToken(_tokenURI, _nftPrice, {
           from: accounts[0],
+          value: _listingPrice
         });
       } catch (error) {
         assert(error, "NFT was minted with previosuly used URI");
