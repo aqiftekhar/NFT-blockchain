@@ -38,7 +38,7 @@ useEffect(()=>{
 const handleAccountsChanged = (...args: unknown[]) => {
     const accounts = args[0] as string[];
     if (accounts.length === 0) {
-        console.error('Please connect to Metamask!');
+        console.log('Please connect to Metamask!');
     } else if (accounts[0] != data) {
         mutate(accounts[0]);
     }

@@ -41,14 +41,24 @@ const Web3Provider: FunctionComponent<any> = ({ children }) => {
     return () => removeGlobalListeners(window.ethereum);
   }, []);
 
-  const pageReload =() => {
+  const pageReload = () => {
     window.location.reload();
   }
+  const handleAccount = (ethereum: MetaMaskInpageProvider) => async () =>{
+  
+    const isLocked = !(await ethereum._metamask.isUnlocked());
+    debugger;
+    if (isLocked) {
+      pageReload();
+    }
+  }
   const setGlobalListeners = (ethereum : MetaMaskInpageProvider) => {
-    ethereum.on("chainChanged", pageReload)
+    ethereum.on("chainChanged", pageReload);
+    ethereum.on("accountsChanged", handleAccount(ethereum));
   }
   const removeGlobalListeners = (ethereum: MetaMaskInpageProvider) => {
-    ethereum.on("chainChanged", pageReload);
+    ethereum.removeListener("chainChanged", pageReload);
+    ethereum.removeListener("accountsChanged", handleAccount);
   }
   return (
     <Web3Context.Provider value={Web3Api}>{children}</Web3Context.Provider>
