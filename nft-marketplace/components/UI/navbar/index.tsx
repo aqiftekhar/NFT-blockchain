@@ -74,7 +74,9 @@ export default function Navbar() {
                     >
                       <circle cx={4} cy={4} r={3} />
                     </svg>
-                    {network.data}
+                    {network.data} ---
+                    {`Is supported: ${network.isSupported}`} ---
+                    {`Target: ${network.targetNetwork}`}
                   </span>
                 </div>
                 <Walletbar

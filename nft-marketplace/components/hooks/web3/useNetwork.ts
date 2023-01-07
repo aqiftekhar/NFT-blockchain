@@ -7,8 +7,13 @@ const NETWORKS: {[k: string]: string } = {
     11155111: "Sepolia Test Network",
     1337: "Ganache Test Network"
 }
+
+const TARGET_ID = process.env.NEXT_PUBLIC_TARGET_CHAIN_ID as string;
+const targetNetwork = NETWORKS[TARGET_ID];
 type useNetworkResponse = {
   isLoading: boolean;
+  isSupported: boolean;
+  targetNetwork: string
 };
 type NetworkHookFactory = CryptoHookFactory<string, useNetworkResponse>;
 
@@ -36,6 +41,8 @@ export const hookFactory: NetworkHookFactory =
       ...swr,
       data,
       isValidating,
+      targetNetwork,
+      isSupported: data === targetNetwork,
       isLoading: isLoading || isValidating,
     };
   };
