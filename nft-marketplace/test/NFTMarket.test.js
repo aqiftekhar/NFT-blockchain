@@ -1,5 +1,5 @@
 const NFTMarket = artifacts.require("NFTMarket");
-const {ethers} = require("ethers");
+const { ethers } = require("ethers");
 
 contract("NFTMarket", (accounts) => {
   let _contract = null;
@@ -40,9 +40,18 @@ contract("NFTMarket", (accounts) => {
     });
 
     it("Should have one listed item", async () => {
-        const _itemsCount = await _contract.getListeItemsCount();
-  
-        assert(_itemsCount.toNumber() == 1, "Items length is not one");
-      });
+      const _itemsCount = await _contract.getListeItemsCount();
+
+      assert(_itemsCount.toNumber() == 1, "Items length is not one");
+    });
+
+    it("Should have create NFT item", async () => {
+      const _nftItem = await _contract.getNFTItem(1);
+        // console.log(_nftItem);
+      assert(_nftItem.tokenId == 1, "token Id is not equal");
+      assert(_nftItem.price == _nftPrice, "NFT price is not same");
+      assert(_nftItem.creator == accounts[0], "creator is not same");
+      assert(_nftItem.isListed == true, "NFT is not Listed");
+    });
   });
 });
