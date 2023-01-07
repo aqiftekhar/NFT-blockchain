@@ -57,8 +57,8 @@ const Web3Provider: FunctionComponent<any> = ({ children }) => {
     ethereum.on("accountsChanged", handleAccount(ethereum));
   }
   const removeGlobalListeners = (ethereum: MetaMaskInpageProvider) => {
-    ethereum.removeListener("chainChanged", pageReload);
-    ethereum.removeListener("accountsChanged", handleAccount);
+    ethereum?.removeListener("chainChanged", pageReload);
+    ethereum?.removeListener("accountsChanged", handleAccount);
   }
   return (
     <Web3Context.Provider value={Web3Api}>{children}</Web3Context.Provider>
