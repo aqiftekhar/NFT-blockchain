@@ -9,9 +9,14 @@ contract NFTMarket is ERC721URIStorage {
     Counters.Counter private _listedItems;
     Counters.Counter private _tokenIds;
 
+    mapping(string => bool) private _usedtokenURI;
+
     constructor() ERC721("CreaturesNFT", "CNFT"){}
 
     function mintToken(string memory tokenURI) public payable returns(uint) {
+
+        require(!tokenURIExists(tokenURI), "Token URI already exists");
+
         _tokenIds.increment();
         _listedItems.increment();
 
@@ -19,8 +24,13 @@ contract NFTMarket is ERC721URIStorage {
 
         _safeMint(msg.sender, newTokenId);
         _setTokenURI(newTokenId, tokenURI);
+        _usedtokenURI[tokenURI] = true;
 
         return newTokenId;
+    }
+
+    function tokenURIExists(string memory tokenURI) public view returns(bool) {
+        return _usedtokenURI[tokenURI] == true;
     }
 
     
