@@ -6,7 +6,7 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import ActiveLink from "../Link";
-import { useWeb3 } from "@providers/web3";
+import { useAccount } from "@hooks/web3";
 
 const navigation = [
   { name: "Marketplace", href: "/", current: true },
@@ -18,9 +18,8 @@ function classNames(...classes: string[]) {
 }
 
 export default function Navbar() {
-  const {hooks} = useWeb3();
-  const {data} = hooks.useAccount("");
-  console.log(data);
+  const {account} = useAccount();
+
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
