@@ -20,6 +20,8 @@
       "@ui/*":["components/UI/*"],
       "@providers":["components/Providers"],
       "@providers/*": ["components/Providers/*"],
+      "@hooks":["components/hooks"],
+      "@hooks/*": ["components/hooks/*"],
       "@models/*":["Model/*"]
     }
   },
