@@ -43,6 +43,6 @@ export const hookFactory: NetworkHookFactory =
       isValidating,
       targetNetwork,
       isSupported: data === targetNetwork,
-      isLoading: isLoading || isValidating,
+      isLoading: isLoading as boolean,
     };
   };
