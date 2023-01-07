@@ -8,9 +8,14 @@ import { useWeb3 } from "@providers/web3";
 
 const Home: NextPage = () => {
   const { isLoading, ethereum, provider, contract } = useWeb3();
-  // console.log(ethereum);
-  // console.log(provider);
-  console.log(contract);
+
+
+  const getNFTInfo = async() => {
+    console.log(await contract!.name);
+  }
+  if (contract) {
+    getNFTInfo();
+  }
 
   const getAccounts = async () => {
     //const isUnlocked = await window?.ethereum?._metamask.isUnlocked();
