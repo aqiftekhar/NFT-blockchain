@@ -24,7 +24,8 @@ const {data, mutate,isValidating, ...swr} = useSWR(
     }
     return account;
 },{
-    revalidateOnFocus: false
+    revalidateOnFocus: false,
+    shouldRetryOnError: false
 })
 
 useEffect(()=>{
