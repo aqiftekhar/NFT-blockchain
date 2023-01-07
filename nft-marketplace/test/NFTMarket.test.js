@@ -21,5 +21,10 @@ contract("NFTMarket", (accounts) => {
       assert.equal(owner, accounts[0], "Owner is not zero");
     });
 
+    it("First token should point to the correct TokenURI", async() => {
+        const actualTokenURI = await _contract.tokenURI(1);
+
+      assert(actualTokenURI == _tokenURI, "Token URI is not correct");
+    });
   });
 });
