@@ -119,7 +119,7 @@ contract("NFTMarket", (accounts) => {
 
     it("Should have one NFT Listed", async () => {
         const _all_Nfts = await _contract.getAllNftItemsOnSale();
-        console.log(_all_Nfts);
+        // console.log(_all_Nfts);
         assert.equal(
             _all_Nfts[0].tokenId,
           2,
