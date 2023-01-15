@@ -44,7 +44,7 @@ contract("NFTMarket", (accounts) => {
 
     it("Should have one listed item", async () => {
       const _itemsCount = await _contract.getListeItemsCount();
-        console.log("_listedItemsCount : ", _itemsCount.toNumber());
+      console.log("_listedItemsCount : ", _itemsCount.toNumber());
       assert(_itemsCount.toNumber() == 1, "Items length is not one");
     });
 
@@ -71,7 +71,7 @@ contract("NFTMarket", (accounts) => {
     });
     it("Should decrease listed item count", async () => {
       const _listedItemsCount = await _contract.getListeItemsCount();
-      console.log('_listedItemsCount : ', _listedItemsCount.toNumber());
+      console.log("_listedItemsCount : ", _listedItemsCount.toNumber());
       assert.equal(
         _listedItemsCount.toNumber(),
         0,
@@ -81,6 +81,40 @@ contract("NFTMarket", (accounts) => {
     it("Should change the owner", async () => {
       const _currentOwner = await _contract.ownerOf(1);
       assert.equal(_currentOwner, accounts[1], "Owner has not been changed");
+    });
+  });
+
+  describe("Token Transfers", () => {
+    const tokenURI = "https://test-json2.com";
+    before(async () => {
+      await _contract.mintToken(tokenURI, _nftPrice, {
+        from: accounts[0],
+        value: _listingPrice,
+      });
+    });
+
+    it("Should have two NFTs created", async () => {
+      const _totalSupply = await _contract.totalSupply();
+      assert.equal(
+        _totalSupply.toNumber(),
+        2,
+        "total supply of tokens is not correct"
+      );
+    });
+
+    it("Should be abl to retrive NFT by index", async () => {
+      const _nft_id_1 = await _contract.tokenByIndex(0);
+      const _nft_id_2 = await _contract.tokenByIndex(1);
+      assert.equal(
+        _nft_id_1.toNumber(),
+        1,
+        "No NFT found at index one"
+      );
+      assert.equal(
+        _nft_id_2.toNumber(),
+        2,
+        "No NFT found at Index two"
+      );
     });
   });
 });

@@ -9,8 +9,12 @@ contract NFTMarket is ERC721URIStorage {
     Counters.Counter private _listedItems;
     Counters.Counter private _tokenIds;
 
+    //All token ids in array
+    uint256[] private _allNfts;
+
     mapping(string => bool) private _usedtokenURI;
     mapping(uint => NFTItem) private _idToNFTItem;
+    mapping(uint => uint) private _idToNftIndex;
 
     uint public _listingPrice = 0.025 ether;
 
@@ -87,5 +91,33 @@ contract NFTMarket is ERC721URIStorage {
     function getListeItemsCount() public view returns (uint) {
         return _listedItems.current();
         
+    }
+
+    function totalSupply() public view returns(uint) {
+        return _allNfts.length;
+    }
+    function tokenByIndex(uint index) public view returns(uint){
+        require(index < totalSupply(), "index out of bound");
+        return _allNfts[index];
+    }
+
+    //Before transfer token function always exectures after the minting
+    function _beforeTokenTransfer(address from, address to, uint tokenId, uint batchSize) internal virtual override{
+        if(batchSize == 0){
+            batchSize = 1;
+        }
+        super._beforeTokenTransfer(from, to, tokenId, batchSize);
+
+        //if Address is zero means we are minting the token
+        if (from == address(0)) {
+            _AddTokenToAllTokensEnumeration(tokenId);
+        } else {
+            
+        }
+    }
+
+    function _AddTokenToAllTokensEnumeration(uint tokenId) private {
+        _idToNftIndex[tokenId] = _allNfts.length;
+        _allNfts.push(tokenId);
     }
 }
