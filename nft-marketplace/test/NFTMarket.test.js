@@ -102,7 +102,7 @@ contract("NFTMarket", (accounts) => {
       );
     });
 
-    it("Should be abl to retrive NFT by index", async () => {
+    it("Should be able to retrive NFT by index", async () => {
       const _nft_id_1 = await _contract.tokenByIndex(0);
       const _nft_id_2 = await _contract.tokenByIndex(1);
       assert.equal(
@@ -116,5 +116,15 @@ contract("NFTMarket", (accounts) => {
         "No NFT found at Index two"
       );
     });
+
+    it("Should have one NFT Listed", async () => {
+        const _all_Nfts = await _contract.getAllNftItemsOnSale();
+        console.log(_all_Nfts);
+        assert.equal(
+            _all_Nfts[0].tokenId,
+          2,
+          "NFT should have token id 2"
+        );
+      });
   });
 });
