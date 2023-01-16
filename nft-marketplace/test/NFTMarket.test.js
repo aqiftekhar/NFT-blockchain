@@ -44,7 +44,7 @@ contract("NFTMarket", (accounts) => {
 
     it("Should have one listed item", async () => {
       const _itemsCount = await _contract.getListeItemsCount();
-      console.log("_listedItemsCount : ", _itemsCount.toNumber());
+    //   console.log("_listedItemsCount : ", _itemsCount.toNumber());
       assert(_itemsCount.toNumber() == 1, "Items length is not one");
     });
 
@@ -71,7 +71,7 @@ contract("NFTMarket", (accounts) => {
     });
     it("Should decrease listed item count", async () => {
       const _listedItemsCount = await _contract.getListeItemsCount();
-      console.log("_listedItemsCount : ", _listedItemsCount.toNumber());
+    //   console.log("_listedItemsCount : ", _listedItemsCount.toNumber());
       assert.equal(
         _listedItemsCount.toNumber(),
         0,
@@ -119,9 +119,27 @@ contract("NFTMarket", (accounts) => {
 
     it("Should have one NFT Listed", async () => {
         const _all_Nfts = await _contract.getAllNftItemsOnSale();
-        console.log("Available NFTs for Sale : ", _all_Nfts[0].tokenId);
+        // console.log("Available NFTs for Sale : ", _all_Nfts[0].tokenId);
         assert.equal(
             _all_Nfts[0].tokenId,
+          2,
+          "NFT should have token id 2"
+        );
+      });
+
+      it("account[1] Should have one Owned NFT", async () => {
+        const _owned_Nfts = await _contract.getOwnedNFTs({from: accounts[1]});
+        assert.equal(
+            _owned_Nfts[0].tokenId,
+          1,
+          "NFT should have token id 1"
+        );
+      });
+
+      it("account[0] Should have one Owned NFT", async () => {
+        const _owned_Nfts = await _contract.getOwnedNFTs({from: accounts[0]});
+        assert.equal(
+            _owned_Nfts[0].tokenId,
           2,
           "NFT should have token id 2"
         );

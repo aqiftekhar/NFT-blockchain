@@ -16,6 +16,9 @@ contract NFTMarket is ERC721URIStorage {
     mapping(uint => NFTItem) private _idToNFTItem;
     mapping(uint => uint) private _idToNftIndex;
 
+    mapping (address => mapping(uint => uint)) private _ownedTokens;
+    mapping(uint => uint) private _idToOwnIndex;
+
     uint public _listingPrice = 0.025 ether;
 
     struct NFTItem {
@@ -101,6 +104,11 @@ contract NFTMarket is ERC721URIStorage {
         return _allNfts[index];
     }
 
+    function tokenOfOwnerByIndex(address owner, uint index) public view returns(uint){
+        require(index < ERC721.balanceOf(owner), "index out of bound");
+        return _ownedTokens[owner][index];
+    }
+
     //Before transfer token function always exectures after the minting
     function _beforeTokenTransfer(address from, address to, uint tokenId, uint batchSize) internal virtual override{
         if(batchSize == 0){
@@ -114,11 +122,34 @@ contract NFTMarket is ERC721URIStorage {
         } else {
             
         }
+        if(to != from){
+            _AddTokenToOwnerEnumeration(to, tokenId);
+        }
     }
 
     function _AddTokenToAllTokensEnumeration(uint tokenId) private {
         _idToNftIndex[tokenId] = _allNfts.length;
         _allNfts.push(tokenId);
+    }
+
+    function _AddTokenToOwnerEnumeration(address to, uint tokenId) private {
+        uint _length = ERC721.balanceOf(to);
+
+        _ownedTokens[to][_length] = tokenId;
+        _idToOwnIndex[tokenId] = _length;
+    }
+
+    function getOwnedNFTs() public view returns (NFTItem[] memory) {
+        uint ownedItemsCount = ERC721.balanceOf(msg.sender);
+        NFTItem[] memory items = new NFTItem[](ownedItemsCount);
+
+        for (uint256 i = 0; i < ownedItemsCount; i++) {
+            uint tokenId = tokenOfOwnerByIndex(msg.sender, i);
+
+            NFTItem storage item = _idToNFTItem[tokenId];
+            items[i] = item;
+        }
+        return items;
     }
 
     function getAllNftItemsOnSale() public view returns(NFTItem[] memory) {
